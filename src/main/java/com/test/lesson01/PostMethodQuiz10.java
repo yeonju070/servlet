@@ -12,27 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/lesson01/quiz10")
 public class PostMethodQuiz10 extends HttpServlet {
-	
+
 	// doPost 메소드 바깥쪽에 위치
-	private final Map<String, String> userMap =  new HashMap<String, String>() {
-	    {
-	        put("id", "marobiana");
-	        put("password", "qwerty1234");
-	        put("name", "신보람");
-	    }
+	private final Map<String, String> userMap = new HashMap<String, String>() {
+		{
+			put("id", "marobiana");
+			put("password", "qwerty1234");
+			put("name", "신보람");
+		}
 	};
-	
+
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		response.setContentType("text/html");
-		
+
 		String id = request.getParameter("id");
 		String password = request.getParameter("password");
-		
+
 		PrintWriter out = response.getWriter();
-		
+
 		out.print("<html><head><title>사용자 정보 확인</title></head><body>");
-		if (id.equals(userMap.get("id")) == false) {
+		if (!userMap.get("id").equals(id)) {
 			out.print("id가 일치하지 않습니다.");
 		} else if (password.equals(userMap.get("password")) == false) {
 			out.print("password가 일치하지 않습니다.");
