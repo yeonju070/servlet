@@ -1,3 +1,4 @@
+<%@page import="java.util.Iterator"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
@@ -33,6 +34,8 @@
 	    list.add(map);
 	    map = new HashMap<String, Object>() {{ put("name", "반올림피자"); put("menu", "피자"); put("point", 4.3); } };
 	    list.add(map);
+	    
+	    String menu = request.getParameter("menu");
 	%>
 	
 	<div class="container">
@@ -47,13 +50,22 @@
 			</thead>
 			<tbody>
 				<%
-			
+					Iterator<Map<String, Object>> iter = list.iterator();
+					//for(Map<String, Object> strMap : list) {
+					while (iter.hasNext()) {
+						Map<String, Object> food = iter.next();
+						String foodMenu = food.get("menu");
+						if (foodMenu.equals(menu)) {
 				%>
 				<tr>
-					<td><%=list %></td>
+					<td>
+					</td>
+					<%
+						}
+					%>
 				</tr>
 				<%
-					
+					}					
 				%>
 			</tbody>
 		</table>
