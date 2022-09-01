@@ -35,7 +35,10 @@
 	    map = new HashMap<String, Object>() {{ put("name", "반올림피자"); put("menu", "피자"); put("point", 4.3); } };
 	    list.add(map);
 	    
-	    String menu = request.getParameter("menu");
+	    String keyword = request.getParameter("keyword");
+	    String check = request.getParameter("check");
+	    
+	    boolean exclude = check != null;		// 체크가 되어있다면 4점 이하 제외
 	%>
 	
 	<div class="container">
@@ -50,22 +53,24 @@
 			</thead>
 			<tbody>
 				<%
-					Iterator<Map<String, Object>> iter = list.iterator();
-					//for(Map<String, Object> strMap : list) {
-					while (iter.hasNext()) {
-						Map<String, Object> food = iter.next();
-						String foodMenu = food.get("menu");
-						if (foodMenu.equals(menu)) {
+					// for, iterator, 향상된 for
+					for (Map<String, Object> item : list) {
+						// 체크가 안된 경우 || 체크 되고 & 4점 초과
+						if (keyword.equals(item.get("menu"))) {		// 메뉴명이 일치할 때
+							// 출력 skip을 해야 하는 조건
+							// item.get("point")는 object이기 때문에 해당 키에 숫자가 들어있는지 알지 못한다.
+							if (exclude && (double)item.get("point") <= 4.0) {		// 체크가 되었을 때 && 4.0 이하일 때 => 제외한다.
+								continue;
+							}
 				%>
 				<tr>
-					<td>
-					</td>
-					<%
-						}
-					%>
+					<td><%= item.get("menu") %></td>
+					<td><%= item.get("name") %></td>
+					<td><%= item.get("point") %></td>
 				</tr>
 				<%
-					}					
+						}
+					}
 				%>
 			</tbody>
 		</table>
