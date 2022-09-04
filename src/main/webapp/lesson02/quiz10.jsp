@@ -1,13 +1,12 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Calendar"%>
-<%@ page import="java.util.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Calendar 활용</title>
+<title>Insert title here</title>
 <!-- bootstrap CDN link -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -17,21 +16,11 @@
 </head>
 <body>
 	<div class="container">
-		<h1>오늘부터 1일</h1>
 		<%
 			Calendar today = Calendar.getInstance();
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 M월 d일");
-			for (int i = 0; i < 10; i++) {
-				 i += 100;
-				today.add(Calendar.DATE, 100);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		%>
-		<div class="display-4">
-		 		<span><%= i %>일 : </span>
-		 		<span class="text-danger"><%= sdf.format(today.getTime()) %></span>
-		</div>
-			<%
-				}
-			%>
+		<h2 class="text-center"><%= sdf.format(today.getTime()) %></h2>
 	</div>
 </body>
 </html>
