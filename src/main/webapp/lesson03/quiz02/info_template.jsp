@@ -1,29 +1,6 @@
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Melong</title>
-<!-- bootstrap CDN link -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<style>
-header {height: 80px;}
-.contents {height: 600px;}
-.contents .top {height: 200px;}
-.contents .mid {height: 40px;}
-.contents .bottom {height: auto;}
-nav {height: 50px;}
-footer { height: 50px}
-footer .size {font-size: 12px;}
-</style>
-</head>
-<body>
 <%
     Map<String, Object> artistInfo = new HashMap<>();
     artistInfo.put("name", "아이유");
@@ -101,11 +78,16 @@ footer .size {font-size: 12px;}
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
 %>
-	<div class="container">
-		<jsp:include page="header.jsp"/>
-		<jsp:include page="nav.jsp"/>
-		<jsp:include page="section.jsp"/>
-		<jsp:include page="footer.jsp"/>
+<section class="contents">
+	<%-- 아티스트 정보 영역 --%>
+	<div class="singer-info d-flex ">
+		<div class="col-2">
+			<img src="<%= artistInfo.get("photo") %>" alt="가수 이미지" width="150px">
+		</div>
+		<div class="col-10">
+			<h3><%= artistInfo.get("name") %></h3>
+			<div><%= artistInfo.get("agency") %></div>
+			<div><%= artistInfo.get("debute") %></div>
+		</div>
 	</div>
-</body>
-</html>
+</section>

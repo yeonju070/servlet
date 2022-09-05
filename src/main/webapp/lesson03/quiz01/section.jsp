@@ -49,18 +49,23 @@
 				<th class="col-4">카테고리</th>
 			</tr>
 		</thead>
-			<%
-				for (Map<String, String> item : list) {
-			%>	
 		<tbody>
+			<%
+				String category = request.getParameter("category");	
+			
+				for (Map<String, String> item : list) {
+					if (category != null && item.get("category").equals(category) == false) {
+						continue;
+					}
+			%>	
 			<tr>
 				<td class="col-3"><%=item.get("ch") %></td>
 				<td class="col-5"><%=item.get("name") %></td>
 				<td class="col-4"><%=item.get("category") %></td>
 			</tr>
-		</tbody>
 			<%
 				}
 			%>
+		</tbody>
 	</table>
 </section>	
