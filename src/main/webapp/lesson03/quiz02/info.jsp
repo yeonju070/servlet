@@ -1,40 +1,15 @@
 <%@page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Melong</title>
-<!-- bootstrap CDN link -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<style>
-header {height: 80px;}
-.contents {height: 600px;}
-.contents .top {height: 200px;}
-.contents .mid {height: 40px;}
-.contents .bottom {height: auto;}
-nav {height: 50px;}
-footer { height: 50px}
-footer .size {font-size: 12px;}
-</style>
-</head>
-<body>
 <%
+// 아티스트 정보 
     Map<String, Object> artistInfo = new HashMap<>();
     artistInfo.put("name", "아이유");
     artistInfo.put("debute", 2008);
     artistInfo.put("agency", "EDAM엔터테인먼트");
     artistInfo.put("photo", "http://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/867/444/81867444_1616662460652_1_600x600.JPG");
-
-
 // 아이유 노래 리스트 
     List<Map<String, Object>> musicList = new ArrayList<>();
-
     Map<String, Object> musicInfo = new HashMap<>();
     musicInfo.put("id", 1);
     musicInfo.put("title", "팔레트");
@@ -45,7 +20,6 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "아이유");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-
     musicInfo = new HashMap<>();
     musicInfo.put("id", 2);
     musicInfo.put("title", "좋은날");
@@ -56,7 +30,6 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "이민수");
     musicInfo.put("lyricist", "김이나");
     musicList.add(musicInfo);
-
     musicInfo = new HashMap<>();
     musicInfo.put("id", 3);
     musicInfo.put("title", "밤편지");
@@ -67,7 +40,6 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "제휘,김희원");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-
     musicInfo = new HashMap<>();
     musicInfo.put("id", 4);
     musicInfo.put("title", "삐삐");
@@ -78,7 +50,6 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "이종훈");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-
     musicInfo = new HashMap<>();
     musicInfo.put("id", 5);
     musicInfo.put("title", "스물셋");
@@ -89,7 +60,6 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "아이유,이종훈,이채규");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-
     musicInfo = new HashMap<>();
     musicInfo.put("id", 6);
     musicInfo.put("title", "Blueming");
@@ -100,12 +70,78 @@ footer .size {font-size: 12px;}
     musicInfo.put("composer", "아이유,이종훈,이채규");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
+    
+    // out.print(request.getParameter("id"));
+%>    
+
+<%
+	// 상세 정보를 보여줄 target map 세팅
+	Map<String, Object> target = null;
+
+	// 1. 목록에서 클릭하고 들어온 경우(id 값)
+	if (request.getParameter("id") != null) {
+		int paramId = Integer.valueOf(request.getParameter("id"));
+		
+		for (Map<String, Object> music : musicList) {
+			if (paramId == (Integer)music.get("id")) {
+				target = music;
+				break;
+			}
+		}
+	}
+	
+	// 2. 상단에서 검색한 경우(search 값)
+	if (request.getParameter("search") != null) {
+		String paramSearch = request.getParameter("search");
+		for (Map<String, Object> music : musicList) {
+			if (paramSearch.equals((String)music.get("title"))) {
+				target = music;
+				break;
+			}
+		}
+	}
+	
 %>
-	<div class="container">
-		<jsp:include page="header.jsp"/>
-		<jsp:include page="nav.jsp"/>
-		<jsp:include page="section.jsp"/>
-		<jsp:include page="footer.jsp"/>
+
+<%
+	if (target != null) {		// target이 있는 경우
+%>
+
+<section class="contents">
+	<h3 class="mt-4">곡 정보</h3>  
+	<div class="d-flex border border-success p-3 mt-4">
+		<div class="col-2">
+			<img src="<%= target.get("thumbnail") %>" alt="썸네일" width="150">
+		</div>
+		<div class="col-10">
+			<div class="display-4"><%= target.get("title") %></div>
+			<div class="font-weight-bold text-success"><%= target.get("singer") %></div>
+			<div class="d-flex text-secondary">
+				<div>
+					<div>앨범</div>
+					<div>재생시간</div>
+					<div>작곡가</div>
+					<div>작사가</div>
+				</div>
+				<div class="ml-4">
+					<div><%= target.get("album") %></div>
+					<div><%= (Integer)target.get("time") / 60%> : <%= (int)target.get("time") % 60 %></div>
+					<div><%= target.get("composer") %></div>
+					<div><%= target.get("lyricist") %></div>
+				</div>
+			</div>
+		</div>
 	</div>
-</body>
-</html>
+	<h3 class="mt-3">가사</h3>
+	<hr>
+	<div>가사 정보 없음</div>
+</section>
+<%
+	} else {		// target이 없는 경우
+%>
+<section class="contents">
+	<h1>정보 없음</h1>
+</section>
+<%
+	}
+%>

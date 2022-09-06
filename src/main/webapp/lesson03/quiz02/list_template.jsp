@@ -24,7 +24,7 @@ footer {height:200px;}
 	<div id="wrap">
 		<jsp:include page="header.jsp" />
 		<jsp:include page="menu.jsp" />
-		<jsp:include page="info.jsp" />
+		<jsp:include page="list.jsp" />
 		<jsp:include page="footer.jsp" />
 	</div>
 </body>
